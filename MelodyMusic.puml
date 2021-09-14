@@ -1,0 +1,56 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+Order --> "1" User
+Ticket --> "1" Concert
+Order "1" *-- "many" Ticket
+class User{
+    - name : String
+    - emailAddress : String
+
+    + User(String name, String emailAddress) : void
+    +getUserName() : String
+    +getEmailAddress() : String
+}
+
+class Concert{
+    - name : String
+    - venue : String
+    - city : String
+
+    + Concert(String name, String venue, String city) : void
+    + getName() : String
+    + getVenue() : String
+    + getCity() : String
+
+}
+
+class Ticket{
+    - date : DateTime
+    - concert : Concert
+    - price : double
+
+    + Ticket(DateTime date, Concert concert, double price) : void
+    + getDate() : DateTime
+    + getPrice() : double
+    + getConcert() : Concert
+}
+
+class Order{
+    - ticket : Ticket
+    - numberOfTickets : int
+    - user : User
+    - platform : Platform
+
+    + Order(Ticket ticket, int numberOfTickets, User user, Platform platform) : void
+    + payment() : void
+    + sendTickets() : void
+
+}
+
+enum Platform{
+    iOS
+    Android
+    Desktop
+}
+@enduml
