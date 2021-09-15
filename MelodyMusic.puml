@@ -5,13 +5,16 @@ Order --> "1" User
 Ticket --> "1" Concert
 Order "1" *-- "many" Ticket
 class User{
-    - name : String
+    - username : String
+
     - emailAddress : String
 
-    + User(String name, String emailAddress) : void
+    + User(String username, String emailAddress) : void
     +getUserName() : String
     +getEmailAddress() : String
 }
+
+
 
 class Concert{
     - name : String
@@ -37,15 +40,38 @@ class Ticket{
 }
 
 class Order{
-    - ticket : Ticket
-    - numberOfTickets : int
+    - tickets : ArrayList
     - user : User
+    - payment : Payment
     - platform : Platform
 
-    + Order(Ticket ticket, int numberOfTickets, User user, Platform platform) : void
-    + payment() : void
+    + Order(ArrayList tickets, User user, Platform platform) : void
+    + calculateOrderAmount():double
     + sendTickets() : void
 
+}
+
+Order "1" --> "1" Payment
+interface Payment{
++takePayment(amount:double):boolean
+}
+
+class CreditCardPayment implements Payment{
+-creditCardNumber: int
+-expiryDate: date
+-cvv:int
++takePayment(amount:double):boolean
+}
+
+class DebitCardPayment implements Payment{
+-debitCardNumber: int
+-expiryDate: date
+-cvv:int
++takePayment(amount:double):boolean
+}
+
+class PaypalPayment implements Payment{
++takePayment(amount:double):boolean
 }
 
 enum Platform{
